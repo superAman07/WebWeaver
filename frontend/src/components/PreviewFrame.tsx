@@ -6,10 +6,10 @@ interface PreviewFrameProps {
   webContainer: WebContainer;
 }
 
-export function PreviewFrame({ webContainer }: PreviewFrameProps) {
-  // In a real implementation, this would compile and render the preview
+export function PreviewFrame({ webContainer }: PreviewFrameProps) { 
   const [url, setUrl] = useState("");
   
+useEffect(() => {
   async function main() {
     const installProcess = await webContainer.spawn('npm', ['install']);
 
@@ -21,15 +21,12 @@ export function PreviewFrame({ webContainer }: PreviewFrameProps) {
 
     await webContainer.spawn('npm', ['run', 'dev']);
  
-    webContainer.on('server-ready', (port, url) => {
-      console.log(url)
-      console.log(port)
+    webContainer.on('server-ready', (port, url) => { 
       setUrl(url);
     });
   }
-  useEffect(() => {
-    main()
-  }, [])
+  main();
+}, [webContainer])
   return (
     <div className="h-full flex items-center justify-center text-gray-400">
       {!url && <div className="text-center">
