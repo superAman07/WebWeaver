@@ -9,24 +9,28 @@ interface PreviewFrameProps {
 export function PreviewFrame({ webContainer }: PreviewFrameProps) { 
   const [url, setUrl] = useState("");
   
-useEffect(() => {
-  async function main() {
-    const installProcess = await webContainer.spawn('npm', ['install']);
-
-    installProcess.output.pipeTo(new WritableStream({
-      write(data) {
-        console.log(data);
+  useEffect(() => {
+    async function main() {
+      try { 
+        const installProcess = await webContainer.spawn('npm', ['install']);
+        await installProcess.exit;
+         
+        const devProcess = await webContainer.spawn('npm', ['run', 'dev']);
+         
+        webContainer.on('server-ready', (port, url) => {
+          setUrl(url);
+        }); 
+        devProcess.output.pipeTo(new WritableStream({
+          write(data) {
+            console.log(data);
+          }
+        }));
+      } catch (error) {
+        console.error('Failed to start preview:', error);
       }
-    }));
-
-    await webContainer.spawn('npm', ['run', 'dev']);
- 
-    webContainer.on('server-ready', (port, url) => { 
-      setUrl(url);
-    });
-  }
-  main();
-}, [webContainer])
+    }
+    main();
+  }, [webContainer])
   return (
     <div className="h-full flex items-center justify-center text-gray-400">
       {!url && <div className="text-center">
