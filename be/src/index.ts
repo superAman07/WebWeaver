@@ -25,7 +25,7 @@ async function getPrediction(messages: any[], systemPrompt?: string) {
         ...(systemPrompt ? [{ role: "system", content: systemPrompt }] : []),
         ...messages
       ],
-      model: "llama-3.2-11b-vision-preview" 
+      model: "llama-3.3-70b-versatile" 
     });
 
     return chatCompletion.choices[0]?.message?.content || "";
