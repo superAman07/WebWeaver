@@ -26,7 +26,7 @@ export function Home() {
             WebWeaver AI
           </h1>
           <p className="text-lg text-gray-300">
-            Describe your dream website, and we'll help you build it step by step
+            Describe your dream website, and it'l help you build it step by step
           </p>
         </div>
 
@@ -42,7 +42,7 @@ export function Home() {
               type="submit"
               className="w-full mt-4 bg-blue-600 text-gray-100 py-3 px-6 rounded-lg font-medium hover:bg-blue-700 transition-colors"
             >
-              Generate Website Plan
+              Generate Website
             </button>
           </div>
         </form>
