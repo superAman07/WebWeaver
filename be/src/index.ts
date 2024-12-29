@@ -25,7 +25,7 @@ async function getPrediction(messages: any[], systemPrompt?: string) {
         ...(systemPrompt ? [{ role: "system", content: systemPrompt }] : []),
         ...messages
       ],
-      model: "llama-3.3-70b-versatile" 
+      model: process.env.MODEL_API as "gemma-7b-it" | "llama3-70b-8192" | "llama3-8b-8192" | "mixtral-8x7b-32768"
     });
 
     return chatCompletion.choices[0]?.message?.content || "";
